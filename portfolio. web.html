@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pradumn Tripathi — Frontend Web Developer</title>
+<meta name="description" content="Portfolio of Pradumn Tripathi, frontend web developer. Real, deployed projects built during internship and beyond.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0F1419;
+    --surface: #161B22;
+    --surface-2: #1C232C;
+    --border: #2A3341;
+    --text: #E6EDF3;
+    --text-dim: #8B96A5;
+    --amber: #F2B94A;
+    --teal: #5CC8C2;
+    --danger: #E5675A;
+    --radius: 10px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before{
+    content:'';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  h1,h2,h3,h4{ font-family: 'Space Grotesk', sans-serif; }
+
+  .mono{ font-family: 'JetBrains Mono', monospace; }
+
+  a{ color: inherit; text-decoration: none; }
+
+  .container{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* NAV */
+  nav{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(15,20,25,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 16px 24px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .logo{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    font-size: 1.05rem;
+    color: var(--amber);
+  }
+  .logo span{ color: var(--text-dim); }
+  .nav-links{
+    display:flex;
+    gap: 28px;
+    list-style:none;
+    font-size: 0.92rem;
+    color: var(--text-dim);
+  }
+  .nav-links a:hover{ color: var(--text); }
+  .nav-toggle{ display:none; background:none; border:none; color:var(--text); font-size:1.4rem; cursor:pointer; }
+
+  @media (max-width: 720px){
+    .nav-links{
+      position:absolute;
+      top: 100%; left:0; right:0;
+      background: var(--surface);
+      flex-direction:column;
+      padding: 20px 24px;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      display:none;
+    }
+    .nav-links.open{ display:flex; }
+    .nav-toggle{ display:block; }
+  }
+
+  /* HERO */
+  .hero{
+    min-height: 88vh;
+    display:flex;
+    align-items:center;
+    padding: 60px 0 40px;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items:center;
+  }
+  @media (max-width: 860px){ .hero-grid{ grid-template-columns: 1fr; } }
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    color: var(--teal);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 16px;
+    display:flex;
+    align-items:center;
+    gap: 8px;
+  }
+  .eyebrow::before{
+    content:'';
+    width: 8px; height:8px;
+    border-radius:50%;
+    background: var(--teal);
+    box-shadow: 0 0 0 4px rgba(92,200,194,0.15);
+  }
+
+  .hero h1{
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.12;
+    margin-bottom: 18px;
+  }
+  .hero h1 .accent{ color: var(--amber); }
+
+  .hero p.lead{
+    color: var(--text-dim);
+    font-size: 1.08rem;
+    max-width: 480px;
+    margin-bottom: 32px;
+  }
+
+  .btn-row{ display:flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    padding: 13px 24px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor:pointer;
+    border: 1px solid transparent;
+    transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+  }
+  .btn-primary{ background: var(--amber); color: #191307; }
+  .btn-primary:hover{ transform: translateY(-2px); background:#f7c869; }
+  .btn-ghost{ border-color: var(--border); color: var(--text); }
+  .btn-ghost:hover{ border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+
+  /* TERMINAL */
+  .terminal{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow:hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  }
+  .terminal-bar{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .dot{ width:11px; height:11px; border-radius:50%; }
+  .dot.red{ background:#E5675A; }
+  .dot.yellow{ background:#F2B94A; }
+  .dot.green{ background:#5CC8C2; }
+  .terminal-title{
+    margin-left: 8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+  .terminal-body{
+    padding: 22px 20px;
+    font-family:'JetBrains Mono',monospace;
+    font-size: 0.88rem;
+    min-height: 220px;
+  }
+  .terminal-body .line{ margin-bottom: 10px; color: var(--text-dim); }
+  .terminal-body .prompt{ color: var(--teal); }
+  .terminal-body .out{ color: var(--text); }
+  .terminal-body .amber{ color: var(--amber); }
+  .cursor{
+    display:inline-block;
+    width: 8px; height: 16px;
+    background: var(--amber);
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    margin-left: 2px;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* SECTION SHELL */
+  section{ padding: 100px 0; position:relative; z-index:1; }
+  .section-head{ margin-bottom: 48px; }
+  .section-tag{
+    font-family:'JetBrains Mono',monospace;
+    color: var(--amber);
+    font-size: 0.82rem;
+    margin-bottom: 10px;
+  }
+  .section-head h2{ font-size: clamp(1.6rem, 3.5vw, 2.2rem); }
+
+  /* ABOUT */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 220px 1fr;
+    gap: 48px;
+    align-items:start;
+  }
+  @media (max-width: 720px){ .about-grid{ grid-template-columns: 1fr; } }
+  .avatar{
+    width: 180px; height: 180px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk',sans-serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--amber);
+  }
+  .about-text p{ color: var(--text-dim); margin-bottom: 16px; max-width: 640px; }
+  .about-text strong{ color: var(--text); }
+
+  .stat-row{ display:flex; gap: 36px; margin-top: 28px; flex-wrap: wrap; }
+  .stat-num{ font-family:'Space Grotesk',sans-serif; font-size: 1.8rem; font-weight:700; color: var(--teal); }
+  .stat-label{ font-size: 0.8rem; color: var(--text-dim); }
+
+  /* SKILLS */
+  .skill-group{ margin-bottom: 30px; }
+  .skill-group h4{
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-family:'JetBrains Mono',monospace;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .tag-cloud{ display:flex; flex-wrap:wrap; gap: 10px; }
+  .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size: 0.85rem;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .tag:hover{ border-color: var(--amber); transform: translateY(-2px); }
+
+  /* PROJECTS - changelog */
+  .changelog{ position:relative; }
+  .changelog::before{
+    content:'';
+    position:absolute;
+    left: 9px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--border);
+  }
+  .release{
+    position: relative;
+    padding-left: 46px;
+    margin-bottom: 46px;
+  }
+  .release:last-child{ margin-bottom: 0; }
+  .release-dot{
+    position:absolute;
+    left: 0; top: 4px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--amber);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .release-dot::after{
+    content:'';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--amber);
+  }
+  .release-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .release-card:hover{ border-color: var(--teal); transform: translateX(4px); }
+  .release-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .version-tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size: 0.78rem;
+    color: var(--amber);
+    background: rgba(242,185,74,0.1);
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .release-title{ font-size: 1.25rem; font-weight: 600; margin-bottom: 8px; }
+  .release-desc{ color: var(--text-dim); font-size: 0.95rem; margin-bottom: 16px; }
+  .stack-row{ display:flex; flex-wrap:wrap; gap: 8px; margin-bottom: 18px; }
+  .stack-chip{
+    font-family:'JetBrains Mono',monospace;
+    font-size: 0.75rem;
+    color: var(--teal);
+    border: 1px solid rgba(92,200,194,0.3);
+    padding: 3px 9px;
+    border-radius: 6px;
+  }
+  .release-links{ display:flex; gap: 18px; font-size: 0.88rem; }
+  .release-links a{ color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: border-color 0.2s, color 0.2s; }
+  .release-links a:hover{ color: var(--amber); border-color: var(--amber); }
+
+  /* CONTACT */
+  .contact-box{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 44px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  @media (max-width: 780px){ .contact-box{ grid-template-columns: 1fr; padding: 28px; } }
+  .contact-box h3{ font-size: 1.5rem; margin-bottom: 12px; }
+  .contact-box p{ color: var(--text-dim); margin-bottom: 24px; font-size: 0.95rem; }
+  .social-list{ list-style:none; display:flex; flex-direction:column; gap: 14px; }
+  .social-list a{
+    display:flex; align-items:center; gap: 10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size: 0.92rem;
+    color: var(--text-dim);
+  }
+  .social-list a:hover{ color: var(--teal); }
+  .social-list .arrow{ color: var(--amber); }
+
+  form{ display:flex; flex-direction:column; gap: 14px; }
+  label{ font-family:'JetBrains Mono',monospace; font-size: 0.78rem; color: var(--text-dim); margin-bottom: 2px; display:block; }
+  input, textarea{
+    width:100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+  }
+  input:focus, textarea:focus{ outline: 2px solid var(--teal); outline-offset: 1px; }
+  textarea{ resize: vertical; min-height: 100px; }
+
+  /* FOOTER */
+  footer{
+    border-top: 1px solid var(--border);
+    padding: 28px 0;
+    text-align:center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    font-family:'JetBrains Mono',monospace;
+  }
+  footer .amber{ color: var(--amber); }
+
+  /* SCROLL REVEAL */
+  .reveal{ opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .cursor{ animation:none; }
+  }
+
+  :focus-visible{ outline: 2px solid var(--teal); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="logo">PT<span>_</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">AVAILABLE FOR OPPORTUNITIES</div>
+      <h1>Building real projects,<br>not just <span class="accent">demos</span>.</h1>
+      <p class="lead">I'm Pradumn Tripathi, a frontend web developer who ships things people can actually open in a browser — e-commerce UIs, PWAs, and tools, deployed and live.</p>
+      <div class="btn-row">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="terminal-title">pradumn@portfolio: ~</span>
+      </div>
+      <div class="terminal-body" id="termBody">
+        <div class="line"><span class="prompt">$</span> <span class="out" id="typedLine"></span><span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-tag">// 01 about</div>
+      <h2>Who's building this</h2>
+    </div>
+    <div class="about-grid reveal">
+      <div class="avatar">PT</div>
+      <div class="about-text">
+        <p>I'm currently a <strong>web development intern</strong>, working through tiered, real-world tasks — not tutorials. Every project I take on gets built, deployed, and shipped to a live URL, because that's the only way to know it actually works.</p>
+        <p>My focus is the frontend: clean layouts, responsive design, and interfaces that feel considered rather than templated. I care about the details — from empty states to hover interactions.</p>
+        <p>Outside of internship work, I'm deepening my fundamentals through a <strong>Python → Java → DSA</strong> path, aiming toward a strong placement-ready foundation in software development.</p>
+        <div class="stat-row">
+          <div><div class="stat-num">4+</div><div class="stat-label">Projects Deployed</div></div>
+          <div><div class="stat-num">100%</div><div class="stat-label">Live on GitHub Pages</div></div>
+          <div><div class="stat-num">∞</div><div class="stat-label">Curiosity to Learn</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-tag">// 02 skills</div>
+      <h2>Tools I reach for</h2>
+    </div>
+    <div class="reveal">
+      <div class="skill-group">
+        <h4>Core</h4>
+        <div class="tag-cloud">
+          <span class="tag">#HTML5</span>
+          <span class="tag">#CSS3</span>
+          <span class="tag">#JavaScript</span>
+          <span class="tag">#Responsive-Design</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Workflow</h4>
+        <div class="tag-cloud">
+          <span class="tag">#Git</span>
+          <span class="tag">#GitHub-Pages</span>
+          <span class="tag">#VS-Code</span>
+          <span class="tag">#Chrome-DevTools</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Currently Learning</h4>
+        <div class="tag-cloud">
+          <span class="tag">#Python</span>
+          <span class="tag">#Java</span>
+          <span class="tag">#DSA</span>
+          <span class="tag">#REST-APIs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-tag">// 03 projects</div>
+      <h2>Release log</h2>
+    </div>
+
+    <div class="changelog">
+
+      <div class="release reveal">
+        <div class="release-dot"></div>
+        <div class="release-card">
+          <div class="release-top">
+            <div class="release-title">ShopKart</div>
+            <div class="version-tag">v1.3.0</div>
+          </div>
+          <p class="release-desc">A Flipkart-inspired e-commerce clone with red/yellow branding, product listings, and cart flow — built to study large-scale retail UI patterns.</p>
+          <div class="stack-row">
+            <span class="stack-chip">HTML</span><span class="stack-chip">CSS</span><span class="stack-chip">JavaScript</span>
+          </div>
+          <div class="release-links">
+            <a href="#">Live Demo →</a>
+            <a href="#">Source Code →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="release reveal">
+        <div class="release-dot"></div>
+        <div class="release-card">
+          <div class="release-top">
+            <div class="release-title">ShieldFox</div>
+            <div class="version-tag">v1.2.0</div>
+          </div>
+          <p class="release-desc">A browser-style interface concept with privacy-first theming, exploring how UI can communicate security and trust visually.</p>
+          <div class="stack-row">
+            <span class="stack-chip">HTML</span><span class="stack-chip">CSS</span><span class="stack-chip">JavaScript</span>
+          </div>
+          <div class="release-links">
+            <a href="#">Live Demo →</a>
+            <a href="#">Source Code →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="release reveal">
+        <div class="release-dot"></div>
+        <div class="release-card">
+          <div class="release-top">
+            <div class="release-title">ChatWave</div>
+            <div class="version-tag">v1.1.0</div>
+          </div>
+          <p class="release-desc">A WhatsApp-style progressive web app with working Chat, Status, and Calls tabs — focused on getting real messaging-app interaction patterns right.</p>
+          <div class="stack-row">
+            <span class="stack-chip">HTML</span><span class="stack-chip">CSS</span><span class="stack-chip">JavaScript</span><span class="stack-chip">PWA</span>
+          </div>
+          <div class="release-links">
+            <a href="#">Live Demo →</a>
+            <a href="#">Source Code →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="release reveal">
+        <div class="release-dot"></div>
+        <div class="release-card">
+          <div class="release-top">
+            <div class="release-title">ShopZone</div>
+            <div class="version-tag">v1.0.0</div>
+          </div>
+          <p class="release-desc">A Gen-Z styled e-commerce storefront — the first project fully deployed and shipped to a live GitHub Pages URL.</p>
+          <div class="stack-row">
+            <span class="stack-chip">HTML</span><span class="stack-chip">CSS</span><span class="stack-chip">JavaScript</span>
+          </div>
+          <div class="release-links">
+            <a href="#">Live Demo →</a>
+            <a href="#">Source Code →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-tag">// 04 contact</div>
+      <h2>Let's work together</h2>
+    </div>
+    <div class="contact-box reveal">
+      <div>
+        <h3>Say hello</h3>
+        <p>Open to internship extensions, freelance frontend work, and collaboration on real, shippable projects.</p>
+        <ul class="social-list">
+          <li><a href="mailto:your.email@example.com"><span class="arrow">→</span> your.email@example.com</a></li>
+          <li><a href="https://github.com/your-username" target="_blank" rel="noopener"><span class="arrow">→</span> github.com/your-username</a></li>
+          <li><a href="https://linkedin.com/in/your-username" target="_blank" rel="noopener"><span class="arrow">→</span> linkedin.com/in/your-username</a></li>
+        </ul>
+      </div>
+      <form onsubmit="event.preventDefault(); alert('Message ready — connect this form to a service like Formspree to receive it by email.');">
+        <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="justify-content:center; margin-top:6px;">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Developed by <span class="amber">Pradumn Tripathi</span> · © 2026
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // Typed terminal effect
+  const lines = [
+    { text: 'whoami', out: 'Pradumn Tripathi' },
+    { text: 'cat role.txt', out: 'Frontend Web Developer' },
+    { text: 'ls projects/', out: 'ShopZone  ChatWave  ShieldFox  ShopKart' },
+    { text: 'echo $STATUS', out: 'Open to opportunities ✓' }
+  ];
+
+  const termBody = document.getElementById('termBody');
+  let lineIndex = 0;
+
+  function typeLine(){
+    if (lineIndex >= lines.length) {
+      setTimeout(() => {
+        termBody.innerHTML = '<div class="line"><span class="prompt">$</span> <span class="out" id="typedLine"></span><span class="cursor"></span></div>';
+        lineIndex = 0;
+        typeLine();
+      }, 4000);
+      return;
+    }
+    const current = lines[lineIndex];
+    const el = document.getElementById('typedLine');
+    let charIdx = 0;
+    el.textContent = '';
+
+    function typeChar(){
+      if (charIdx < current.text.length) {
+        el.textContent += current.text[charIdx];
+        charIdx++;
+        setTimeout(typeChar, 55);
+      } else {
+        setTimeout(() => {
+          const outLine = document.createElement('div');
+          outLine.className = 'line';
+          outLine.innerHTML = '<span class="amber">' + current.out + '</span>';
+          termBody.insertBefore(outLine, termBody.lastElementChild);
+
+          const nextLine = document.createElement('div');
+          nextLine.className = 'line';
+          nextLine.innerHTML = '<span class="prompt">$</span> <span class="out" id="typedLine"></span><span class="cursor"></span>';
+          termBody.removeChild(termBody.lastElementChild);
+          termBody.appendChild(nextLine);
+
+          lineIndex++;
+          setTimeout(typeLine, 500);
+        }, 400);
+      }
+    }
+    typeChar();
+  }
+  typeLine();
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
